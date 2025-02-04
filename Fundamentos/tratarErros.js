@@ -1,32 +1,12 @@
 /*
 
-# Estou iniciando em JavaScript
+Este código é para estudos. O curso no qual estou me baseando é o Domine Web, composto por 15 cursos. Até o momento, concluí o capítulo de fundamentos (Aula 75). Alguns métodos, como filter e reduce, não foram abordados até este ponto. No entanto, ao pesquisar formas possíveis de realizar uma filtragem mais performática, busquei por conta própria informações nos seguintes sites:
 
-## Descrição
+Método filter: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
 
-Este código é uma implementação simples de tratamento de erros em JavaScript, projetada para funcionar de forma independente, sem depender de um contexto de código maior. O objetivo principal é realizar a soma dos elementos de um array e lidar com possíveis erros de forma elegante e informativa.
+Método reduce: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
 
-## Objetivo
-
-- **Soma de Array**: A função `somarNumeros` visa somar todos os elementos de um array fornecido, desde que esses elementos sejam números válidos.
-
-## Possíveis Erros
-
-1. **Tipo de Argumento Incorreto**: Se o argumento passado para a função `somarNumeros` não for um array, a função irá logar um erro indicando que o valor passado deve ser um array.
-   
-2. **Elementos Não Numéricos**: Caso algum elemento do array não seja um número ou não possa ser interpretado como um (resultando em `NaN`), a função irá lançar um erro especificando qual elemento é inválido e a exigência de que todos os elementos devem ser números.
-
-## Tratamento de Erros
-
-- **Verificação de Array**: A função `somarNumeros` primeiramente verifica se o argumento `arr` é um array utilizando `Array.isArray(arr)`. Se não for, a função `tratamentoDeErros` é chamada com uma mensagem apropriada e a função retorna `null`.
-
-- **Soma com Verificação**: Durante a operação de soma, cada elemento do array é verificado:
-  - Se o tipo do elemento não for 'number' ou se for 'NaN', um erro é lançado com uma mensagem detalhada sobre o elemento inválido.
-  - A operação de soma só prossegue se todos os elementos forem números válidos.
-
-- **Captura de Erros**: Qualquer erro lançado durante a operação de soma é capturado pelo bloco `catch`. A função `tratamentoDeErros` é então chamada com a mensagem do erro capturado, e a função `somarNumeros` retorna `null`.
-
-## Estrutura do Código
+E utilizei o MariTalk (Maritaca.ia - IA Brasileira) para corrigir este meu comentário.
 
 */
 
@@ -34,25 +14,38 @@ function tratamentoDeErros(mensagem) {
     console.error(`Erro: ${mensagem}`);
 }
 
-function somarNumeros(arr) {
-    if (!Array.isArray(arr)) {
-        tratamentoDeErros("O valor passado deve ser um array.");
-        return null;
+function validarArray(arr) {
+    if (!Array.isArray(arr)) { // Se arr NÃO for um array, a condição será true, e o bloco de código será executado. Outras palavras, o arr não é um array.
+        tratamentoDeErros("O valor passado deve ser um array válido.");
+        return false; // Retorna false indicando que o array não é válido e interrompendo o fluxo da função.
     }
-    let valorTotal = 0;
-    try {
-        for (let i = 0; i < arr.length; i++) {
-            if (typeof arr[i] !== 'number' || isNaN(arr[i])) {
-                throw new Error(`Elemento inválido no array: ${arr[i]}. Todos os elementos devem ser números.`);
-            }
-            valorTotal += arr[i];
-        }
-        return valorTotal;
-    } catch (e) {
-        tratamentoDeErros(e.message);
-        return null;
+
+    // Filtra os elementos inválidos. filter
+    let elementosInvalidos = arr.filter(item => typeof item !== 'number' || isNaN(item));
+
+    if (elementosInvalidos.length > 0) {
+        tratamentoDeErros(`O array contém valores inválidos: ${elementosInvalidos.join(", ")}. Apenas números são permitidos.`);
+        return false;
     }
+
+    return true;
 }
-let array_numeros = [15, 2, "Andre"];
+
+function somarNumeros(arr) {
+    if (!validarArray(arr)) {
+        return null;
+    }
+    
+    return arr.reduce((total, num) => total + num, 0); // 0 É o valor inicial fornecido para o acumulador total
+}
+/*
+// Testes - Caso de erro
+let array_numeros = [15, 2, "texto", NaN, 7, true];
 let somaDeNumeros = somarNumeros(array_numeros);
-console.log(somaDeNumeros);
+console.log(somaDeNumeros); // null
+*/
+
+// Caso válido
+array_numeros = [15, 2, 4, 5, 7]; 
+somaDeNumeros = somarNumeros(array_numeros);
+console.log(somaDeNumeros); // 33
