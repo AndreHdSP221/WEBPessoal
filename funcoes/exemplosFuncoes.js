@@ -14,7 +14,7 @@ console.log(funcaoDigaTchau(nomePessoa))
 
 // Passando para array
 
-const array = [function(nome) { return `Seja Bem_Vindo(a), ${nome}` }, function(nome) {return `Até Mais, ${nome}`}]
+const array = [function(nome) { return `Seja Bem-vindo(a), ${nome}` }, function(nome) {return `Até Mais, ${nome}`}]
 
 console.log(array[0](nomePessoa))
 console.log(array[1](nomePessoa))
