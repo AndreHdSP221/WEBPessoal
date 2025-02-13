@@ -8,6 +8,7 @@ function Carro(velocidadeMaxima = 200, delta = 5){
             velocidadeAtual += delta;
         } else {
             velocidadeAtual = velocidadeMaxima;
+            return 404
         }
     }
     
@@ -27,14 +28,14 @@ console.log(uno.getVelocidade())
 const ferrari = new Carro(350, 20)
 
 let VelocidadeFerrari = 0
+let velocidade = 0
 
 do{
-
     console.log(`Velocidade atual: ${ferrari.getVelocidade()}\n`)
-    ferrari.acelerar()
-    VelocidadeFerrari = ferrari.getVelocidade()
+    velocidade = ferrari.acelerar()
+}while(velocidade != 404)
 
-}while(VelocidadeFerrari < 350)
+console.log(`Velocidade Final: ${ferrari.getVelocidade()}\n`)
 
 console.log(typeof Carro)
 console.log(typeof ferrari)
