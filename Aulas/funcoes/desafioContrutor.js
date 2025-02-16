@@ -1,11 +1,16 @@
-function errorHandling(code){
-    var codes = {
-        132: "Great!",
-        404: "Not Great!"
-    }
-}
+function errorHandling(error) {
+    const errorMessages = {
+      132: "Código de sucesso!",
+      404: "Recurso não encontrado!"
+    };
+  
+    const errorMessage = errorMessages[error.code] || "Erro desconhecido!"
+  
+    console.error(`Erro ${error.code}: ${errorMessage}`)
+    console.error("Detalhes do erro:", error)
+  }
 
-function creatPeople(Name, age, sex = "I'd rather not say", YearOfBirth = "'''Default Value'''"){
+function creatPeople(Name, age, sex = "Not provided", YearOfBirth = "'''Default Value'''"){
     let namePeople = Name
     let agePeople = age
     let sexPeople = sex
@@ -15,25 +20,25 @@ function creatPeople(Name, age, sex = "I'd rather not say", YearOfBirth = "'''De
         presentation: function(){
             genderMessage = ""
             try {
-                switch(sexPeople.toUpperCase()){
-                    case "F":
+                switch(sexPeople.toLowerCase()){
+                    case "f":
                         genderMessage = "Woman"
                         break
-                    case "M":
+                    case "m":
                         genderMessage = "Man"
                         break
-                    case "I'D RATHER NOT SAY":
+                    case "not provided":
                         genderMessage = "I'd rather not say"
                         break
                     default:
-                        console.error("Deve ser um valor valido.") 
+                        console.error("Not Provided.") 
                 }
                 if ((typeof(namePeople) === "string" && namePeople !== null && namePeople !== undefined) && !isNaN(agePeople)) {
-                    console.log(`Hallo guys!! Where are you? I am ${namePeople}! I have ${agePeople} years! I was born in ${YearOfBirthPeople} and I'm ${genderMessage}`)
+                    console.log(`Hallo guys!! Where are you? I am ${namePeople}! I have ${agePeople} years! I was born in ${YearOfBirthPeople} and my gender is: ${genderMessage}`)
                     return null
                 }
-            } catch(e) {
-                errorHandling(e)
+            } catch(error) {
+                errorHandling({ code: 404, message: error.message });
                 return -1;
             }
 
@@ -54,5 +59,8 @@ function creatPeople(Name, age, sex = "I'd rather not say", YearOfBirth = "'''De
 }
 
 // Sequence: Name, Age, Sex and Year of birth
-const personMariana = creatPeople("Mariana", 18, "f", 2007);
-personMariana.presentation();
+const personMariana = creatPeople("Mariana", 32, "f", 1993)
+personMariana.presentation()
+
+const personAmanda = creatPeople("Amanda", 24, undefined, 2001)
+personAmanda.presentation()
