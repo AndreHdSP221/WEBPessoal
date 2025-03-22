@@ -34,7 +34,7 @@ const ferrari = {
 const volvo = {
     modelo:"Volvo V40",
     status (){
-        return `${this.modelo}: ${super.status}` // Super referencia a função status do prototipo do objeto Volvo, ou seja, o objeto carro.This referencia o modelo desse objeto.
+        return `${this.modelo}: ${super.status()}` // Super referencia a função status do prototipo do objeto Volvo, ou seja, o objeto carro.This referencia o modelo desse objeto.
     }
 }
 
@@ -48,7 +48,7 @@ console.log(ferrari.modelo)
 console.log(ferrari.velMaxima)
 
 volvo.aceleraMais(100)
-console.log(volvo.status)
+console.log(volvo.status())
 
 ferrari.aceleraMais(123)
-console.log(ferrari.status)
+console.log(ferrari.status()) // Nessa caso, o this da função estatos referencia a velocidade maxima do objeto ferrari, graças a flexibilidade de contexto.
